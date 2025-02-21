@@ -28,12 +28,11 @@ jobs:
       - name: Checkout repository
       - uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::490004620598:role/GitHubConnectionManagment  # Role you created in AWS IAM
-          role-session-name: GitHubConnectionManagment  # Session name for the assumed role
-          aws-region: us-east-1  # Set the AWS region for your Elastic Beanstalk environment
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }} # Role you created in AWS IAM
+          aws-region: ${{ secrets.AWS_REGION }}  # Set the AWS region for your Elastic Beanstalk environment
 
       - name: Install AWS Elastic Beanstalk CLI
         run: |
