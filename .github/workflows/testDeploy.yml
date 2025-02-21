@@ -35,10 +35,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}  # Set the AWS region for your Elastic Beanstalk environment
 
       - name: Install AWS Elastic Beanstalk CLI
-        run: |
-          pip install awsebcli  # Install the Elastic Beanstalk CLI (needed for deployment)
+        run: pip install awsebcli  # Install the Elastic Beanstalk CLI (needed for deployment)
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          eb init -p python-3.13 test_Env --region us-east-1  # Initialize EB CLI with your app name and region
+          eb init -p python-3.13 test_Env --region ${{ secrets.AWS_REGION }}  # Initialize EB CLI with your app name and region
           eb deploy  # Deploy your application to Elastic Beanstalk
