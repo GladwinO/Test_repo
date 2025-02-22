@@ -26,7 +26,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v2
@@ -38,4 +38,6 @@ jobs:
         run: pip install awsebcli  # Install the Elastic Beanstalk CLI (needed for deployment)
 
       - name: Deploy to Elastic Beanstalk
-        run: eb init -p python-3.13 test_Env --region ${{ secrets.AWS_REGION }} && eb deploy
+        run: |
+          eb init -p python-3.13 test_Env --region ${{ secrets.AWS_REGION }}
+          eb deploy
