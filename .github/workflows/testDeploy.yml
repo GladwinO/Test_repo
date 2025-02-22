@@ -24,6 +24,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+
+      - name: Debug Directory
+        run: |
+          pwd #Shows current directory
+          ls -la #Lists all files, to check if .elasticbeanstalk/exists
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,7 +43,11 @@ jobs:
       - name: Install AWS Elastic Beanstalk CLI
         run: pip install awsebcli  # Install the Elastic Beanstalk CLI (needed for deployment)
 
-      - name: Deploy to Elastic Beanstalk
+      - name: Initialize Elastic Beanstalk
         run: |
           eb init -p python-3.13 test_Env --region ${{ secrets.AWS_REGION }}
+          eb status || eb create TestEnv-env #creates the environment if it doesn't exist
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
           eb deploy
