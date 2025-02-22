@@ -38,6 +38,4 @@ jobs:
         run: pip install awsebcli  # Install the Elastic Beanstalk CLI (needed for deployment)
 
       - name: Deploy to Elastic Beanstalk
-        run: |
-          eb init -p python-3.13 test_Env --region ${{ secrets.AWS_REGION }}  # Initialize EB CLI with your app name and region
-          eb deploy  # Deploy your application to Elastic Beanstalk
+        run: eb init -p python-3.13 test_Env --region ${{ secrets.AWS_REGION }} && eb deploy
